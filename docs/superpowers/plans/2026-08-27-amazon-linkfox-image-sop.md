@@ -15,7 +15,7 @@
 - Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\SKILL.md` — 触发条件、硬规则、状态机和 references 路由。
 - Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\agents\openai.yaml` — 自动触发时的显示名称、摘要和默认提示。
 - Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\README.md` — 公开安装、首次准备、最短触发口令和使用边界。
-- Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\references\browser-preflight.md` — Chrome/Edge 接管前检查、会话互斥和三次停止规则。
+- Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\references\browser-preflight.md` — Chrome/Edge 接管前检查、会话互斥和基于错误指纹/状态变化/时间预算的恢复规则。
 - Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\references\linkfox-270-config.md` — Img2/1K/中品质、9 张、270 算力和逐图蓝图。
 - Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\references\image-qa-and-repair.md` — 九图验收、槽位补位、图像模型路由和尺寸图隔离。
 - Create: `C:\Users\Administrator\Documents\amazon-linkfox-image-sop\references\public-configuration.md` — 项目路径、归档路径、命名规则、权限指南和偏好卡的占位配置。
@@ -75,7 +75,7 @@ Expected: FAIL because `scripts/validate-sop-skill.ps1` and the fixture files do
 
 - [ ] **Step 3: 建立最小夹具内容**
 
-`valid-skill/SKILL.md` 只包含完整 frontmatter 和 270、四张 A+ 9:6、人工点击、尺寸图隔离、三次停止等短语；两个 invalid 夹具分别加入 `https://z41qdaw50z.feishu.cn/...` 和删除 `270` 硬规则。
+`valid-skill/SKILL.md` 只包含完整 frontmatter 和 270、四张 A+ 9:6、人工点击、尺寸图隔离、错误指纹/状态变化/时间预算/控制面/同一动作等短语；两个 invalid 夹具分别加入 `https://z41qdaw50z.feishu.cn/...` 和删除 `270` 硬规则。
 
 - [ ] **Step 4: 提交测试夹具**
 
@@ -115,7 +115,7 @@ Expected: commit succeeds.
 
 - [ ] **Step 1: 写浏览器接管闸门**
 
-写成 Agent 能直接照做的检查：列出标签页 → 按标题/网址/标签组/时间匹配 → 接管 → 读标题/网址/加载状态 → 再检查 LinkFox 四个页面状态。规定一个控制面、一个 Agent 持有标签页；只做短状态检查，不固定等待；同一问题最多三次；失败只报告阻塞并指向使用者自己的权限指南。保留 `openTabs()`/`claimTab()` 的语义，但不泄露私有会话 ID。
+写成 Agent 能直接照做的检查：列出标签页 → 按标题/网址/标签组/时间匹配 → 接管 → 读标题/网址/加载状态 → 再检查 LinkFox 四个页面状态。规定一个控制面、一个 Agent 持有标签页；只做短状态检查，不固定等待；每次记录错误指纹、状态变化、对症动作、下一状态判据和时间预算；同一错误指纹、同一状态和同一动作不得重复，允许在交还并记录原因后切换到能力明确不同的控制面。失败只报告阻塞并指向使用者自己的权限指南。保留 `openTabs()`/`claimTab()` 的语义，但不泄露私有会话 ID。
 
 - [ ] **Step 2: 写 270 算力配置和人类交接**
 
@@ -127,7 +127,7 @@ Expected: commit succeeds.
 
 - [ ] **Step 4: 运行 references 交叉检查**
 
-Run: `rg -n "270|W 9:H 6|开始生成|尺寸图|claimTab|三次|两次" SKILL.md references`  
+Run: `rg -n "270|W 9:H 6|开始生成|尺寸图|claimTab|错误指纹|状态变化|时间预算|两次" SKILL.md references`
 Expected: 入口和三个 references 之间的硬规则一致；任何 240 文本都只出现在“已验收主图例外”段落。
 
 - [ ] **Step 5: 提交 references**
@@ -195,7 +195,7 @@ Expected: commit succeeds.
 
 - [ ] **Step 2: 实现硬规则检查**
 
-校验器必须在 Skill 内容和 references 中找到 `270`、`Img2`、`1K`、`中品质`、`W 9:H 6`、四张 A+、停在开始生成前、人工点击、尺寸图不进 LinkFox、三次浏览器停止和两次内置图像模型后转网页。缺任意一项就返回非零。
+校验器必须在 Skill 内容和 references 中找到 `270`、`Img2`、`1K`、`中品质`、`W 9:H 6`、四张 A+、停在开始生成前、人工点击、尺寸图不进 LinkFox、错误指纹/状态变化/时间预算/控制面/同一动作恢复规则和两次内置图像模型后转网页。缺任意一项就返回非零；发现旧的固定三次浏览器停止文案也返回非零。
 
 - [ ] **Step 3: 实现公开安全扫描**
 

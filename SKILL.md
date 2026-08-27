@@ -1,11 +1,11 @@
 ---
 name: amazon-linkfox-image-sop
-description: Run a stable Amazon product-image workflow through LinkFox and an image model, with browser preflight, 270-compute defaults, human generation handoff, slot QA, dimension-image isolation, and final archiving. Use for LinkFox套图、Amazon主图/A+批量生图、九图修补或尺寸图归档；do not use for general image generation or unrelated browser automation.
+description: Use when an Amazon product-image task involves LinkFox套图、Amazon主图/A+批量生图、浏览器接管、九图修补或尺寸图归档；do not use for general image generation or unrelated browser automation.
 ---
 
 # Amazon LinkFox 套图 SOP
 
-这个 Skill 把公用 Amazon 套图流程变成固定的状态机。它先读取本次产品资料和使用者自己的配置，再做浏览器接管检查；没有接管证据时不得上传、填写或消耗 LinkFox 算力。
+这个 Skill 把公用 Amazon 套图流程变成固定的状态机。它先读取本次产品资料和使用者自己的配置，再做浏览器接管检查；没有接管证据时不得上传、填写或消耗 LinkFox 算力。浏览器故障使用错误指纹、状态变化、对症动作和时间预算管理，不使用全局固定重试次数。
 
 ## 开工顺序
 
@@ -21,6 +21,7 @@ description: Run a stable Amazon product-image workflow through LinkFox and an i
 - 商品信息必须是 S1、S3–S6、A1–A4 的逐图蓝图，不能只写产品简介，也不能让白底图代替场景图。
 - 配置完成后停在“开始生成”前，由使用者亲自点击、下载并回传九张图；Skill 绝不点击该按钮。
 - 用户提供并明确验收主图时，才允许记录 8 张/240 的例外；不得因页面显示 240 自行跳过主图。
+- 浏览器恢复必须记录控制面、错误指纹、页面状态、对症动作和下一状态判据。只有可验证的状态变化或经过交还的明确控制面切换才能继续；同一错误指纹、同一状态和同一动作禁止重复。默认按 10 分钟/故障事件的恢复时间预算处理，有持续状态进展时可延长短窗口；对症动作耗尽、预算用尽或出现安全风险时停止并报告。
 
 ## 回传与收尾
 

@@ -77,7 +77,11 @@ $hardRules = [ordered]@{
     'four-a-plus' = '(?i)(四张\s*A\+|A\+[^\r\n]{0,80}4\s*张|four\s+A\+\s+images)'
     'human-click' = '(?i)(亲自点击|human\s+click|由使用者亲自点击)'
     'dimension-isolation' = '(?i)(尺寸图.{0,40}(不进入|不在|外)\s*LinkFox|LinkFox.{0,40}(不做|不能做)尺寸图|dimension.{0,40}outside\s+LinkFox)'
-    'browser-stop' = '(?i)(三次|three\s+checks|最多三次)'
+    'browser-error-fingerprint' = '(?i)(错误指纹|error\s+fingerprint)'
+    'browser-state-change' = '(?i)(状态变化|state\s+change)'
+    'browser-time-budget' = '(?i)(时间预算|time\s+budget)'
+    'browser-control-surface' = '(?i)(控制面|control\s+surface)'
+    'browser-same-action' = '(?i)(同一动作|same\s+action)'
     'image-fallback' = '(?i)(两次|two).{0,50}(内置|internal).{0,50}(网页|web|GPT)'
 }
 
@@ -85,6 +89,11 @@ foreach ($rule in $hardRules.GetEnumerator()) {
     if ($combinedText -notmatch $rule.Value) {
         Add-Failure "hard-rule:$($rule.Key)"
     }
+}
+
+$legacyFixedBrowserRule = '(?is)(?:最多三次|连续三次[^\r\n]{0,80}(?:停止|失败)|three\s+checks|stop\s+after\s+three|同一问题最多\s*3\s*次|browser[^\r\n]{0,80}3\s*(?:attempts?|checks|tries)|第\s*4\s*次)'
+if ($combinedText -match $legacyFixedBrowserRule) {
+    Add-Failure 'browser-fixed-retry'
 }
 
 $publicSafetyRules = [ordered]@{
