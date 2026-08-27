@@ -1,0 +1,1 @@
+Status template fixture.

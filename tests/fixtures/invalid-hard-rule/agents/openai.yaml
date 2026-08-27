@@ -1,0 +1,7 @@
+interface:
+  display_name: "Hard rule fixture"
+  short_description: "A hard rule fixture skill"
+  default_prompt: "Use $fixture-hard-rule to test the public SOP validator."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Private fixture"
+  short_description: "A private fixture skill"
+  default_prompt: "Use $fixture-private to test the public SOP validator."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Valid fixture"
+  short_description: "A valid fixture skill"
+  default_prompt: "Use $fixture-valid to test the public SOP validator."
+
+policy:
+  allow_implicit_invocation: true
