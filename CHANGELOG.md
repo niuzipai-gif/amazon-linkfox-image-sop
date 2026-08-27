@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Clarify that final products are archived directly under `FINAL_ARCHIVE_ROOT/<product-name>/`; do not infer or use status subfolders such as “uploaded products”.
+
 ## 1.2.0 - 2026-08-27
 
 - 增加首次使用飞书控制通道门禁：自动尝试安装官方 Lark CLI Skill pack，更新 `lark-cli`，校验用户授权，并在缺授权时生成二维码进入分步授权。

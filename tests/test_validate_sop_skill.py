@@ -85,3 +85,17 @@ def test_first_run_bootstrap_can_install_missing_lark_cli():
     script = (ROOT / "scripts" / "bootstrap-feishu-bridge.ps1").read_text(encoding="utf-8")
     assert "npm install --global" in script
     assert "@larksuite/cli" in script
+
+
+def test_archive_root_uses_direct_product_folder_not_status_subfolder():
+    runtime_files = [
+        ROOT / "SKILL.md",
+        ROOT / "README.md",
+        ROOT / "references" / "public-configuration.md",
+        ROOT / "templates" / "task-status.md",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in runtime_files)
+
+    assert "FINAL_ARCHIVE_ROOT/<product-name>" in text
+    assert "direct child" in text.lower()
+    assert "status subfolder" in text.lower()

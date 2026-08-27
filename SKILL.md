@@ -28,7 +28,7 @@ description: Use when an Amazon product-image task involves LinkFox套图、Amaz
 
 收到九张图或明确缺陷后，读取 [references/image-qa-and-repair.md](references/image-qa-and-repair.md)，只修失败槽位。内置图像模型两次失败后转 GPT 网页图像模型；网页也失败就报告并停止，不改用代码、拼图或设计软件。
 
-九张合格后直接制作尺寸图，提交十图验收；只有收到“确认十张”或“按此归档”才复制、命名和归档。任务状态字段和回执格式使用 [templates/task-status.md](templates/task-status.md)。
+九张合格后直接制作尺寸图，提交十图验收；只有收到“确认十张”或“按此归档”才复制、命名和归档。归档时在 `FINAL_ARCHIVE_ROOT` 下建立 `<product-name>` 作为 direct child 文件夹；不要把新产品放进“已上架/待处理”等状态子目录或 status subfolder。任务状态字段和回执格式使用 [templates/task-status.md](templates/task-status.md)。
 
 ## 正常等待点
 

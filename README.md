@@ -27,6 +27,8 @@ Skill 第一次触发时，会先执行 [references/feishu-bridge-bootstrap.md](
 
 把自己的配置写进项目，不要把账号、密码、Token 或私人链接放进这个公开仓库。
 
+归档路径按配置执行：最终成品写入 `FINAL_ARCHIVE_ROOT/<product-name>/`，其中产品文件夹是归档根目录的 direct child。状态名称（例如“已上架”或“待处理”）不是默认的目录层级，不能自行在归档根目录下再套一层状态文件夹。
+
 ## 最短触发方式
 
 ```text

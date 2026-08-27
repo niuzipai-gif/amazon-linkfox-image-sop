@@ -52,6 +52,6 @@
 尺寸图数值、单位、方向和对象：已核对 / 有误待重做
 十图待最终确认：是 / 否
 人类最终确认：确认十张 / 按此归档 / 未确认
-归档目录：
+归档目录：`FINAL_ARCHIVE_ROOT/<product-name>/`（product folder is a direct child of the final root；不使用“已上架/待处理”等状态子目录）
 归档回读：文件数 / 文件名 / A+实际9:6 / 尺寸图数值 / 补位槽位
 ```
