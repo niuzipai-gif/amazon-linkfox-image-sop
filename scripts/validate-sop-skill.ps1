@@ -36,6 +36,8 @@ $requiredFiles = @(
     'references/linkfox-270-config.md',
     'references/image-qa-and-repair.md',
     'references/public-configuration.md',
+    'references/feishu-bridge-bootstrap.md',
+    'scripts/bootstrap-feishu-bridge.ps1',
     'templates/task-status.md',
     'templates/user-preferences.md'
 )
@@ -59,10 +61,12 @@ foreach ($relativeFile in @('SKILL.md', 'README.md', 'CHANGELOG.md', 'LICENSE'))
     $candidate = Join-Path $resolvedPath $relativeFile
     if (Test-Path -LiteralPath $candidate -PathType Leaf) { $runtimeFiles += $candidate }
 }
-foreach ($directory in @('agents', 'references', 'templates')) {
+foreach ($directory in @('agents', 'references', 'templates', 'scripts')) {
     $candidate = Join-Path $resolvedPath $directory
     if (Test-Path -LiteralPath $candidate -PathType Container) {
-        $runtimeFiles += Get-ChildItem -LiteralPath $candidate -Recurse -File | Select-Object -ExpandProperty FullName
+        $runtimeFiles += Get-ChildItem -LiteralPath $candidate -Recurse -File |
+            Where-Object { $_.Name -notin @('validate-sop-skill.ps1', 'install-skill.ps1') } |
+            Select-Object -ExpandProperty FullName
     }
 }
 
@@ -83,6 +87,13 @@ $hardRules = [ordered]@{
     'browser-control-surface' = '(?i)(控制面|control\s+surface)'
     'browser-same-action' = '(?i)(同一动作|same\s+action)'
     'image-fallback' = '(?i)(两次|two).{0,50}(内置|internal).{0,50}(网页|web|GPT)'
+    'feishu-bootstrap' = '(?i)(feishu|飞书).{0,80}(bootstrap|门禁|bridge|首次)'
+    'feishu-update' = 'lark-cli\s+update'
+    'feishu-auth-status' = 'auth\s+status'
+    'feishu-auth-login' = 'auth\s+login'
+    'feishu-qrcode' = 'lark-cli\s+auth\s+qrcode'
+    'feishu-user-handoff' = '已完成授权'
+    'feishu-control-board' = '飞书控制板'
 }
 
 foreach ($rule in $hardRules.GetEnumerator()) {

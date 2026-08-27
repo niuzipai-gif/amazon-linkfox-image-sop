@@ -5,14 +5,15 @@ description: Use when an Amazon product-image task involves LinkFox套图、Amaz
 
 # Amazon LinkFox 套图 SOP
 
-这个 Skill 把公用 Amazon 套图流程变成固定的状态机。它先读取本次产品资料和使用者自己的配置，再做浏览器接管检查；没有接管证据时不得上传、填写或消耗 LinkFox 算力。浏览器故障使用错误指纹、状态变化、对症动作和时间预算管理，不使用全局固定重试次数。
+这个 Skill 把公用 Amazon 套图流程变成固定的状态机。它先初始化飞书控制通道，再读取本次产品资料和使用者自己的配置，最后做浏览器接管检查；没有飞书授权或浏览器接管证据时不得读取控制板、上传、填写或消耗 LinkFox 算力。首次使用的飞书门禁见 [references/feishu-bridge-bootstrap.md](references/feishu-bridge-bootstrap.md)，浏览器故障使用错误指纹、状态变化、对症动作和时间预算管理，不使用全局固定重试次数。
 
 ## 开工顺序
 
-1. 读取当前项目中的产品资料、真实尺寸、正式参考图、禁用项、拍摄文档（如有）和 `templates/user-preferences.md` 对应的偏好卡。
-2. 读取 [references/public-configuration.md](references/public-configuration.md)，确认项目路径、最终归档位置、命名规则和使用者自己的首次权限指南。
-3. 建立任务状态，先写“资料待确认”；把缺失的产品事实、尺寸、禁用项、归档位置或命名规则一次性问全。
-4. 收到“确认继续”后，读取 [references/browser-preflight.md](references/browser-preflight.md)，完成浏览器接管闸门，再读取 [references/linkfox-270-config.md](references/linkfox-270-config.md) 配置 LinkFox。
+1. 首次触发先运行 [references/feishu-bridge-bootstrap.md](references/feishu-bridge-bootstrap.md) 和 `scripts/bootstrap-feishu-bridge.ps1 -Authorize`；完成 `lark-cli update`、`auth status` 与用户授权后，才读取飞书控制板和产品文档。
+2. 读取当前项目中的产品资料、真实尺寸、正式参考图、禁用项、拍摄文档（如有）和 `templates/user-preferences.md` 对应的偏好卡。
+3. 读取 [references/public-configuration.md](references/public-configuration.md)，确认项目路径、最终归档位置、命名规则和使用者自己的首次权限指南。
+4. 建立任务状态，先写“资料待确认”；把缺失的产品事实、尺寸、禁用项、归档位置或命名规则一次性问全。
+5. 收到“确认继续”后，读取 [references/browser-preflight.md](references/browser-preflight.md)，完成浏览器接管闸门，再读取 [references/linkfox-270-config.md](references/linkfox-270-config.md) 配置 LinkFox。
 
 ## 不可改变的生产规则
 

@@ -27,7 +27,7 @@ if ((Test-Path -LiteralPath $Destination) -and -not $Force) {
 
 New-Item -ItemType Directory -Force -Path $Destination | Out-Null
 
-$runtimeItems = @('SKILL.md', 'agents', 'references', 'templates', 'README.md', 'CHANGELOG.md', 'LICENSE')
+$runtimeItems = @('SKILL.md', 'agents', 'references', 'templates', 'scripts', 'README.md', 'CHANGELOG.md', 'LICENSE')
 foreach ($item in $runtimeItems) {
     $sourceItem = Join-Path $source $item
     if (Test-Path -LiteralPath $sourceItem) {
@@ -37,3 +37,4 @@ foreach ($item in $runtimeItems) {
 
 Write-Host "Installed Amazon LinkFox SOP Skill to: $Destination"
 Write-Host 'Trigger example: Use $amazon-linkfox-image-sop to run the Amazon LinkFox image SOP.'
+Write-Host 'First-use Feishu bridge: run scripts/bootstrap-feishu-bridge.ps1 -Authorize before reading Feishu or LinkFox.'

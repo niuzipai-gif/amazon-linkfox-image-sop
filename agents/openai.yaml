@@ -2,7 +2,7 @@ interface:
   display_name: "Amazon LinkFox 套图 SOP"
   short_description: "稳定执行 LinkFox 套图、A+、尺寸图与归档"
   brand_color: "#935AF6"
-  default_prompt: "Use $amazon-linkfox-image-sop to run the Amazon LinkFox image SOP with browser preflight, 270-compute defaults, human generation handoff, image QA, dimension-image isolation, and final archiving."
+  default_prompt: "Use $amazon-linkfox-image-sop to bootstrap and verify the Feishu control bridge first, then run the Amazon LinkFox image SOP with browser preflight, 270-compute defaults, human generation handoff, image QA, dimension-image isolation, and final archiving."
 
 policy:
   allow_implicit_invocation: true

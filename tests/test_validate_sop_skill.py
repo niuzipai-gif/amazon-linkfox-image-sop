@@ -59,3 +59,23 @@ def test_condition_based_validator_rule_rejects_legacy_fixed_retry_contract():
     result = run_validator(ROOT / "tests" / "fixtures" / "invalid-hard-rule")
     assert result.returncode != 0
     assert "browser-fixed-retry" in (result.stdout + result.stderr)
+
+
+def test_first_run_feishu_bridge_gate_is_documented():
+    runtime_files = [
+        ROOT / "SKILL.md",
+        ROOT / "README.md",
+        ROOT / "references" / "feishu-bridge-bootstrap.md",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in runtime_files)
+
+    required_terms = (
+        "lark-cli update",
+        "auth status",
+        "auth login",
+        "lark-cli auth qrcode",
+        "已完成授权",
+        "飞书控制板",
+    )
+    for term in required_terms:
+        assert term in text, f"missing first-run Feishu bridge term: {term}"

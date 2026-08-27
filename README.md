@@ -1,6 +1,6 @@
 # Amazon LinkFox 套图 SOP Skill
 
-这是一个给 Codex 使用的公开 Skill，用来稳定执行 Amazon 商品套图流程：先检查浏览器是否真的能接管，再配置 LinkFox 生成九张图，等待人亲自点击，收到图片后做 QA 和修补，最后用图像模型制作尺寸图并在确认后归档。
+这是一个给 Codex 使用的公开 Skill，用来稳定执行 Amazon 商品套图流程：首次使用先自动引导 Feishu bridge，再检查浏览器是否真的能接管，配置 LinkFox 生成九张图，等待人亲自点击，收到图片后做 QA 和修补，最后用图像模型制作尺寸图并在确认后归档。
 
 ## 安装
 
@@ -15,6 +15,8 @@ pwsh -NoProfile -File .\scripts\install-skill.ps1
 默认会安装到当前用户的 `.codex\skills\amazon-linkfox-image-sop`。如果目标目录已经存在，安装器会停止，不删除旧文件；确认备份后再加 `-Force` 覆盖同名文件。
 
 ## 第一次使用前
+
+Skill 第一次触发时，会先执行 [references/feishu-bridge-bootstrap.md](references/feishu-bridge-bootstrap.md)：检查并尝试安装官方 Lark CLI Skill pack，运行 `lark-cli update` 和 `auth status`。缺少授权时自动启动 `auth login --no-wait --json`，用 `lark-cli auth qrcode` 输出二维码；使用者完成浏览器授权后回复“已完成授权”，Agent 再继续读取飞书控制板。公开 Skill 不保存真实飞书地址、Token 或 device code。
 
 使用者先在自己的 Codex 项目中准备：
 
@@ -34,7 +36,7 @@ pwsh -NoProfile -File .\scripts\install-skill.ps1
 命名规则：[命名文档链接或按公用默认命名]
 ```
 
-## 流程中只有三次等待
+## 流程中的明确等待点
 
 1. Agent 读完资料后，等你回复“确认继续”；
 2. LinkFox 配置完成后，Agent 停在“开始生成”前，由你亲自点击并回传九张图；
