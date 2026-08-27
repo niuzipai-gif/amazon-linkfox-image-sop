@@ -1,1 +1,1 @@
-首次使用前完成 Feishu bridge bootstrap：运行 `npx skills add larksuite/cli -g -y` 和 `lark-cli update`，再运行 `auth status`。未授权时执行 `auth login --no-wait --json`，用 `lark-cli auth qrcode` 生成二维码；用户回复 `已完成授权` 后，才能读取 `飞书控制板`。
+首次使用前完成 Feishu bridge bootstrap：缺少 CLI 时自动运行 `npm install --global @larksuite/cli`，再运行 `lark-cli update` 和 `auth status`。未授权时执行 `auth login --no-wait --json`，用 `lark-cli auth qrcode` 生成二维码；用户回复 `已完成授权` 后，才能读取 `飞书控制板`。
