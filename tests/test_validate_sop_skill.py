@@ -79,3 +79,9 @@ def test_first_run_feishu_bridge_gate_is_documented():
     )
     for term in required_terms:
         assert term in text, f"missing first-run Feishu bridge term: {term}"
+
+
+def test_first_run_bootstrap_can_install_missing_lark_cli():
+    script = (ROOT / "scripts" / "bootstrap-feishu-bridge.ps1").read_text(encoding="utf-8")
+    assert "npm install --global" in script
+    assert "@larksuite/cli" in script

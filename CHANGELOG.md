@@ -6,6 +6,10 @@
 - 增加 Feishu bridge 引导文档和安全 bootstrap 脚本；授权完成后才允许读取飞书控制板、产品文档或进入 LinkFox。
 - 安装器和验证器纳入 Feishu bridge 运行文件与硬规则检查，公开仓库不保存真实飞书地址、Token、device code 或本机路径。
 
+## 1.2.1 - 2026-08-27
+
+- 首次 bridge 引导在缺少 `lark-cli` 时自动安装官方 npm 包 `@larksuite/cli`；全局 Skill pack 安装改为可选，避免 Codex 不支持全局 Skill 安装时产生误报。
+
 ## 1.1.0 - 2026-08-27
 
 - 将浏览器接管和图像通道恢复从固定次数改为错误指纹、状态变化、对症动作和时间预算机制。

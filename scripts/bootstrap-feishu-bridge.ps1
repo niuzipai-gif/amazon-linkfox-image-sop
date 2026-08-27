@@ -3,6 +3,7 @@ param(
     [switch]$Authorize,
     [string]$DeviceCode,
     [string]$QrOutput = 'feishu-auth-qr.png',
+    [switch]$InstallSkillPack,
     [switch]$SkipSkillPack,
     [switch]$SkipUpdate
 )
@@ -64,11 +65,25 @@ function Find-JsonValue {
 
 $larkCli = Get-CommandPath -Name 'lark-cli'
 if ($null -eq $larkCli) {
-    Write-Output 'NEEDS_INSTALL lark-cli is not available on PATH.'
-    exit 2
+    $npm = Get-CommandPath -Name 'npm'
+    if ($null -eq $npm) {
+        Write-Output 'NEEDS_INSTALL lark-cli is missing and npm is not available on PATH.'
+        exit 2
+    }
+    Write-Output 'INSTALL @larksuite/cli via npm'
+    & $npm install --global '@larksuite/cli' 2>&1 | ForEach-Object { Write-Output $_ }
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output 'INSTALL_FAILED official @larksuite/cli installation failed.'
+        exit 2
+    }
+    $larkCli = Get-CommandPath -Name 'lark-cli'
+    if ($null -eq $larkCli) {
+        Write-Output 'INSTALL_FAILED lark-cli is still missing after official installation.'
+        exit 2
+    }
 }
 
-if (-not $SkipSkillPack) {
+if ($InstallSkillPack -and -not $SkipSkillPack) {
     $npx = Get-CommandPath -Name 'npx'
     if ($null -eq $npx) {
         Write-Output 'WARN npx is not available; skipped official Lark CLI Skill pack bootstrap.'

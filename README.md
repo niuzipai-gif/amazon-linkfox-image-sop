@@ -16,7 +16,7 @@ pwsh -NoProfile -File .\scripts\install-skill.ps1
 
 ## 第一次使用前
 
-Skill 第一次触发时，会先执行 [references/feishu-bridge-bootstrap.md](references/feishu-bridge-bootstrap.md)：检查并尝试安装官方 Lark CLI Skill pack，运行 `lark-cli update` 和 `auth status`。缺少授权时自动启动 `auth login --no-wait --json`，用 `lark-cli auth qrcode` 输出二维码；使用者完成浏览器授权后回复“已完成授权”，Agent 再继续读取飞书控制板。公开 Skill 不保存真实飞书地址、Token 或 device code。
+Skill 第一次触发时，会先执行 [references/feishu-bridge-bootstrap.md](references/feishu-bridge-bootstrap.md)：检查 `lark-cli`，缺失时自动运行 `npm install --global @larksuite/cli`，再运行 `lark-cli update` 和 `auth status`。缺少授权时自动启动 `auth login --no-wait --json`，用 `lark-cli auth qrcode` 输出二维码；使用者完成浏览器授权后回复“已完成授权”，Agent 再继续读取飞书控制板。公开 Skill 不保存真实飞书地址、Token 或 device code。
 
 使用者先在自己的 Codex 项目中准备：
 
