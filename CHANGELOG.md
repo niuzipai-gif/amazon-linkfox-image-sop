@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Clarify that final products are archived directly under `FINAL_ARCHIVE_ROOT/<product-name>/`; do not infer or use status subfolders such as “uploaded products”.
+- Make the LinkFox UI brand-gene selection explicit: choose and record colors, fonts, and overall style in the interface; default non-A+ images are 1:1 while only four A+ images use 9:6.
 
 ## 1.2.0 - 2026-08-27
 

@@ -99,3 +99,20 @@ def test_archive_root_uses_direct_product_folder_not_status_subfolder():
     assert "FINAL_ARCHIVE_ROOT/<product-name>" in text
     assert "direct child" in text.lower()
     assert "status subfolder" in text.lower()
+
+
+def test_linkfox_ui_brand_gene_and_aspect_ratio_contract_is_explicit():
+    runtime_files = [
+        ROOT / "SKILL.md",
+        ROOT / "README.md",
+        ROOT / "references" / "linkfox-270-config.md",
+        ROOT / "templates" / "task-status.md",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in runtime_files)
+
+    assert "智能品牌基因" in text
+    assert "字体" in text
+    assert "品牌基因" in text and "界面" in text
+    assert "提示词" in text
+    assert "1:1" in text
+    assert "只有 A+" in text
