@@ -4,6 +4,7 @@
 
 - Clarify that final products are archived directly under `FINAL_ARCHIVE_ROOT/<product-name>/`; do not infer or use status subfolders such as “uploaded products”.
 - Make the LinkFox UI brand-gene selection explicit: choose and record colors, fonts, and overall style in the interface; default non-A+ images are 1:1 while only four A+ images use 9:6.
+- Add an upload recovery gate: wait for the browser `filechooser`, make the visible upload control actionable, confirm LinkFox's file-specific compression prompt when present, verify thumbnails and the main-image marker, and preserve the configured page instead of repeating the same failed click.
 
 ## 1.2.0 - 2026-08-27
 

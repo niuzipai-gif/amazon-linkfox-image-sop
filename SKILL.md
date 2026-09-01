@@ -13,7 +13,7 @@ description: Use when an Amazon product-image task involves LinkFox套图、Amaz
 2. 读取当前项目中的产品资料、真实尺寸、正式参考图、禁用项、拍摄文档（如有）和 `templates/user-preferences.md` 对应的偏好卡。
 3. 读取 [references/public-configuration.md](references/public-configuration.md)，确认项目路径、最终归档位置、命名规则和使用者自己的首次权限指南。
 4. 建立任务状态，先写“资料待确认”；把缺失的产品事实、尺寸、禁用项、归档位置或命名规则一次性问全。
-5. 收到“确认继续”后，读取 [references/browser-preflight.md](references/browser-preflight.md)，完成浏览器接管闸门，再读取 [references/linkfox-270-config.md](references/linkfox-270-config.md) 配置 LinkFox。
+5. 收到“确认继续”后，读取 [references/browser-preflight.md](references/browser-preflight.md)，完成浏览器接管和上传入口闸门，再读取 [references/linkfox-270-config.md](references/linkfox-270-config.md) 配置 LinkFox。
 6. 配置页面时，若出现“智能品牌基因”或同类品牌基因模块，必须在界面中实际选择颜色、字体和整体风格，并把选择结果写入任务状态；品牌基因是页面配置，不得只写进提示词或用提示词代替界面选择。
 
 ## 不可改变的生产规则
@@ -25,6 +25,9 @@ description: Use when an Amazon product-image task involves LinkFox套图、Amaz
 - 用户提供并明确验收主图时，才允许记录 8 张/240 的例外；不得因页面显示 240 自行跳过主图。
 - 画幅必须分开锁定：默认只有 4 张 A+ 使用 `W 9:H 6`；其余普通图和独立尺寸图默认 `1:1`，除非本次任务明确指定其他比例。普通图不能被标成 A+，A+ 也不能按普通图比例提交。
 - 如果页面有“智能品牌基因”模块，必须实际选择并记录颜色、字体、整体风格和模板状态；“把颜色/字体写入商品提示词”不算完成品牌基因配置。
+- 上传参考图必须走浏览器文件选择事件：先等待 `filechooser`，再点击当前可见的上传控件并用 `chooser.setFiles(...)` 提交；不得用裸 CDP 或未验证的输入注入替代。上传控件若不在视口内，先滚动对应配置面板并核验按钮位置，再执行一次动作。
+- 若 LinkFox 针对具体文件弹出“尺寸或大小超过上限，将进行压缩”的确认框，读取文件名和提示内容后点击页面上的“确定”；压缩完成后必须以实际缩略图/参考图数量和“主图”标记回读为准，不能把仍在 loading 的上传按钮当成成功。
+- 用户要求已完成主图作为产品身份参考时，主图必须作为参考图第一张上传；批量上传不超过页面允许的上限。上传失败时保留已填写的页面和已上传图片，记录错误指纹、状态快照、唯一对症动作和下一状态判据，不得为了重试清空配置或重复同一点击。
 - 浏览器恢复必须记录控制面、错误指纹、页面状态、对症动作和下一状态判据。只有可验证的状态变化或经过交还的明确控制面切换才能继续；同一错误指纹、同一状态和同一动作禁止重复。默认按 10 分钟/故障事件的恢复时间预算处理，有持续状态进展时可延长短窗口；对症动作耗尽、预算用尽或出现安全风险时停止并报告。
 
 ## 回传与收尾

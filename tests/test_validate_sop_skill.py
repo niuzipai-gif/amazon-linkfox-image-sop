@@ -116,3 +116,23 @@ def test_linkfox_ui_brand_gene_and_aspect_ratio_contract_is_explicit():
     assert "提示词" in text
     assert "1:1" in text
     assert "只有 A+" in text
+
+
+def test_upload_recovery_contract_is_explicit():
+    runtime_files = [
+        ROOT / "SKILL.md",
+        ROOT / "README.md",
+        ROOT / "references" / "browser-preflight.md",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in runtime_files)
+
+    required_terms = (
+        "filechooser",
+        "setFiles",
+        "压缩",
+        "缩略图",
+        "主图",
+        "保留",
+    )
+    for term in required_terms:
+        assert term in text, f"missing upload recovery term: {term}"
